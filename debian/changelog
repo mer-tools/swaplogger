@@ -1,0 +1,102 @@
+swaplogger (0.13) unstable; urgency=low
+
+  * Add a build-time dependency to pkg-config
+  * Link to EGL and X11 libraries to allow tracing applications that do no use
+    those libraries
+    Fixes: NB#243973
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Fri, 25 Feb 2011 17:26:20 +0200
+
+swaplogger (0.12) unstable; urgency=low
+
+  * Add an option for showing swap geometry (-g)
+  * Fixed postinst/rm script exit code
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Wed, 09 Feb 2011 13:15:38 +0200
+
+swaplogger (0.11) unstable; urgency=low
+
+  * Call ldconfig after package installation or removal
+    Fixes: NB#223934
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Thu, 03 Feb 2011 11:27:12 +0200
+
+swaplogger (0.10) unstable; urgency=low
+
+  * SIGUSR1 can now be used to trigger a reset of swap statistics
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Thu, 27 Jan 2011 15:45:18 +0200
+
+swaplogger (0.9) unstable; urgency=low
+
+  * Added support for EGL_NOK_swap_region2
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Thu, 27 Jan 2011 15:24:13 +0200
+
+swaplogger (0.8) unstable; urgency=low
+
+  * Added new X damage tracking mechanism for detecting swaps
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Fri, 26 Nov 2010 15:13:58 +0200
+
+swaplogger (0.7-2) unstable; urgency=low
+
+  * Bumping version to trigger a security-enabled rebuild
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Tue, 12 Oct 2010 10:37:28 +0300
+
+swaplogger (0.7-1) unstable; urgency=low
+
+  * Add flag to turn off XShmPutImage support (--only-egl)
+  * Add flag to turn off eglSwapBuffers (--only-x)
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Fri, 02 Jul 2010 11:53:19 +0300
+
+swaplogger (0.6-1) unstable; urgency=low
+
+  * Added support for XShmPutImage tracing
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Thu, 27 May 2010 18:09:10 +0300
+
+swaplogger (0.5-1) unstable; urgency=low
+
+  * The iterative average FPS counter now ignores the first zero-length frame
+    after a reset
+  * The windowed average (afps_N) counter now includes all samples within the
+    window
+  * Made iterative average FPS (afps) counter more accurate
+  * Added option to display non-rounded results (-w)
+  * The min/max FPS counters are now also valid before the first manual reset
+  * Fixed the help switch (-h) in the launcher script
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Tue, 11 May 2010 16:30:02 +0300
+
+swaplogger (0.4-1) unstable; urgency=low
+
+  * Added iterative average statistics
+  * Made output more compact
+  * Added output documentation in launcher script
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Thu, 15 Apr 2010 17:30:45 +0300
+
+swaplogger (0.3-1) unstable; urgency=low
+
+  * Print statistics at reset and program exit
+  * Less intrusive interactive mode
+  * Allow switching quiet output on and off interactively
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Tue, 13 Apr 2010 15:04:54 +0300
+
+swaplogger (0.2-1) unstable; urgency=low
+
+  * Added interactive mode (-i)
+  * Fixed rounding error in ifps/afps calculation
+  * Allow selection of afps window size (-p)
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Tue, 13 Apr 2010 11:36:47 +0300
+
+swaplogger (0.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Sami Kyöstilä <sami.kyostila@nokia.com>  Fri, 09 Apr 2010 14:41:38 +0300

@@ -1,0 +1,15 @@
+Source: swaplogger
+Section: graphics
+Priority: extra
+Maintainer: Sami Kyöstilä <sami.kyostila@nokia.com>
+Build-Depends: debhelper (>= 7), libx11-dev, libxext-dev, libegl-dev, libxdamage-dev, pkg-config
+Standards-Version: 3.8.3
+Homepage: https://projects.maemo.org/trac/maemo-graphics/
+
+Package: swaplogger
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: FPS measurement tool
+ Swap logger is a tool for measuring frames per second (FPS) values from
+ application rendering. Currently it supports EGL clients and applications that
+ use XShmPutImage.

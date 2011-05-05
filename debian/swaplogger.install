@@ -1,0 +1,3 @@
+swaplogger usr/bin
+swaplogger.so /usr/lib
+swaplogger.so.1 /usr/lib

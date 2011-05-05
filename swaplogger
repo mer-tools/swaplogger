@@ -1,0 +1,134 @@
+#!/bin/sh
+# Copyright (c) 2011 Nokia
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+help()
+{
+    cat << EOF
+Swap logger - Frame rate estimation tool - Copyright 2010, Nokia
+Author: Sami Kyöstilä <sami.kyostila@nokia.com>
+
+Usage: swaplogger [OPTIONS] PROGRAM [PROG OPTS]
+
+Options:
+    -q          Quiet operation; don't print info for every frame
+    -i          Enable interactive mode (press 'h' for help)
+    -p N        Set number of frames for calculating moving average FPS
+    -o FILE     Write statistics to FILE
+    -w          Show results without rounding
+    -g          Show swap geometry
+    --only-x    Count only XSHMPutImage call as a frame
+    --only-egl  Count only eglSwapBuffers call as a frame
+    --only-dmg  Count only XDamage events as a frame
+    -h          This text
+
+Signals:
+    USR1        Reset swap statistics (same as 'r' in interactive mode)
+
+Output fields:
+    source      Component that triggered the swap (EGL, XSHM, XDMG)
+    frame       Frame number since program start or reset
+    dur         Duration of current frame in milliseconds
+    ifps        Instantaneous FPS (frames per second) for current frame
+    min         Minimum FPS since start or reset
+    max         Maximum FPS since start or reset
+    afps_N      Average FPS in previous N frames
+    afps        Average FPS since start or reset
+EOF
+}
+
+while test $# != 0; do
+    case "$1" in
+        -q) export SL_VERBOSE=0
+            ;;
+        -i) export SL_INTERACTIVE=1
+            ;;
+        -w) export SL_ROUND=0
+            ;;
+        -g) export SL_SHOW_GEOMETRY=1
+            ;;
+        --only-x)
+            if test "${SL_COUNT_EGL}" -o "${SL_COUNT_XDAMAGE}"; then
+                echo "can only define one of --only-x, --only-egl and --only-dmg"
+                exit 1
+            else
+                export SL_COUNT_X=1
+                export SL_COUNT_EGL=0
+                export SL_COUNT_XDAMAGE=0
+            fi
+            ;;
+        --only-egl)
+            if test "${SL_COUNT_X}" -o "${SL_COUNT_XDAMAGE}"; then
+                echo "can only define one of --only-x, --only-egl and --only-dmg"
+                exit 1
+            else
+                export SL_COUNT_EGL=1
+                export SL_COUNT_X=0
+                export SL_COUNT_XDAMAGE=0
+            fi
+            ;;
+        --only-dmg)
+            if test "${SL_COUNT_X}" -o "${SL_COUNT_EGL}"; then
+                echo "can only define one of --only-x, --only-egl and --only-dmg"
+                exit 1
+            else
+                export SL_COUNT_XDAMAGE=1
+                export SL_COUNT_EGL=0
+                export SL_COUNT_X=0
+            fi
+            ;;
+
+        -o) if test $# -gt 1; then
+                export SL_OUTPUT=$2
+            else
+                echo "Output file name missing"
+                exit 1
+            fi
+            shift
+            ;;
+        -p) if test $# -gt 1; then
+                export SL_PERIOD=$2
+            else
+                echo "FPS period size missing"
+                exit 1
+            fi
+            shift
+            ;;
+        -h) help
+            exit 0
+            ;;
+        --help) help
+            exit 0
+            ;;
+        -*) echo "Unknown option: $1"
+            exit 1
+            ;;
+        *) break
+            ;;
+    esac
+    shift
+done
+
+if test $# -eq 0; then
+    help
+    exit 1
+fi
+
+LD_PRELOAD=swaplogger.so exec $@

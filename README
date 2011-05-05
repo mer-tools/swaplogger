@@ -1,0 +1,25 @@
+Swap logger
+-----------
+
+Author: Sami Kyöstilä <sami.kyostila@nokia.com>
+
+Swap logger is a command line frame rate measurement tool for EGL and X11
+applications. To use it, launch the application you wish to measure with the
+'swaplogger' command:
+
+    $ swaplogger my_app
+
+Frame rate information will now be printed to the console as the application
+runs. The output fields are:
+
+    source      Component that triggered the swap (EGL, XSHM, XDMG)
+    frame       Frame number since program start or reset
+    dur         Duration of current frame in milliseconds
+    ifps        Instantaneous FPS (frames per second) for current frame
+    min         Minimum FPS since start or reset
+    max         Maximum FPS since start or reset
+    afps_N      Average FPS in previous N frames
+    afps        Average FPS since start or reset
+
+See the help ('swaplogger --help') for further information and more advanced
+use cases.
