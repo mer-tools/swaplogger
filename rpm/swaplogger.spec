@@ -4,7 +4,7 @@ Version:    0.1~git0.46bfc6
 Release:    1
 Group:      Development/Tools
 License:    MIT
-URL:        https://gitorious.org/swaplogger
+URL:        https://github.com/mer-tools/swaplogger
 Source0:    %{name}-%{version}.tar.gz
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xdamage)
@@ -21,7 +21,7 @@ Description: %{summary}
 
 %build
 unset LD_AS_NEEDED
-make %{?jobs:-j%jobs}
+make %{_smp_mflags}
 
 
 %install
