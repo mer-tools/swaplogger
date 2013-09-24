@@ -44,7 +44,13 @@ int count_eglSwapBuffers = 1;
 
 int eglInit(void)
 {
-    eglLibrary = dlopen("libEGL.so", RTLD_NOW);
+    eglLibrary = dlopen("libEGL.so.1", RTLD_NOW);
+    if (!eglLibrary) {
+        perror("cannot open EGL library");
+        fflush(stderr);
+        return 0;
+    }
+
     real_eglSwapBuffers = (eglSwapBuffers_ptr)dlsym(eglLibrary, "eglSwapBuffers");
     if (!real_eglSwapBuffers)
     {
