@@ -1,6 +1,6 @@
 Name:       swaplogger
 Summary:    A command line frame rate measurement tool for EGL and X11 applications.
-Version:    0.1~git0.46bfc6
+Version:    0.0.0
 Release:    1
 Group:      Development/Tools
 License:    MIT
