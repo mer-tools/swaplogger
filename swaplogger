@@ -54,6 +54,10 @@ Output fields:
 EOF
 }
 
+export SL_COUNT_EGL=1
+export SL_COUNT_X=0
+export SL_COUNT_XDAMAGE=0
+
 while test $# != 0; do
     case "$1" in
         -q) export SL_VERBOSE=0
@@ -65,34 +69,19 @@ while test $# != 0; do
         -g) export SL_SHOW_GEOMETRY=1
             ;;
         --only-x)
-            if test "${SL_COUNT_EGL}" -o "${SL_COUNT_XDAMAGE}"; then
-                echo "can only define one of --only-x, --only-egl and --only-dmg"
-                exit 1
-            else
-                export SL_COUNT_X=1
-                export SL_COUNT_EGL=0
-                export SL_COUNT_XDAMAGE=0
-            fi
+            export SL_COUNT_X=1
+            export SL_COUNT_EGL=0
+            export SL_COUNT_XDAMAGE=0
             ;;
         --only-egl)
-            if test "${SL_COUNT_X}" -o "${SL_COUNT_XDAMAGE}"; then
-                echo "can only define one of --only-x, --only-egl and --only-dmg"
-                exit 1
-            else
-                export SL_COUNT_EGL=1
-                export SL_COUNT_X=0
-                export SL_COUNT_XDAMAGE=0
-            fi
+            export SL_COUNT_EGL=1
+            export SL_COUNT_X=0
+            export SL_COUNT_XDAMAGE=0
             ;;
         --only-dmg)
-            if test "${SL_COUNT_X}" -o "${SL_COUNT_EGL}"; then
-                echo "can only define one of --only-x, --only-egl and --only-dmg"
-                exit 1
-            else
-                export SL_COUNT_XDAMAGE=1
-                export SL_COUNT_EGL=0
-                export SL_COUNT_X=0
-            fi
+            export SL_COUNT_XDAMAGE=1
+            export SL_COUNT_EGL=0
+            export SL_COUNT_X=0
             ;;
 
         -o) if test $# -gt 1; then
